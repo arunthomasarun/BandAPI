@@ -24,11 +24,15 @@ namespace BandAPI.Controllers
             this._mapper = mapper;
         }
 
+
+
+        //http://localhost:3052/api/bands?mainGenre=Rock
+        //http://localhost:3052/api/bands
         [HttpGet]
         [HttpHead]
-        public IActionResult GetBands()
+        public IActionResult GetBands([FromQuery] string mainGenre)
         {
-            var bands = _bandAlbumRepository.GetBands();
+            var bands = _bandAlbumRepository.GetBands(mainGenre);
 
             //var bandsDto = new List<BandDto>();
 
@@ -48,11 +52,13 @@ namespace BandAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<BandDto>>(bands));
         }
 
-        [HttpGet("{bandIda}")]
+        [HttpGet("{bandId}")]
         public IActionResult GetBand(Guid bandId)
         {
             var band = _bandAlbumRepository.GetBand(bandId);
             return Ok(band);
         }
+
+
     }
 }
