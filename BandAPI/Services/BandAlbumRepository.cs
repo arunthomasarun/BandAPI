@@ -109,6 +109,22 @@ namespace BandAPI.Services
             return _context.Bands.Where(b => b.MainGenre == mainGenre).ToList();
         }
 
+        public IEnumerable<Band> GetBands(string mainGenre, string searchQuery)
+        {
+            if (string.IsNullOrWhiteSpace(mainGenre) && string.IsNullOrWhiteSpace(searchQuery))
+                return GetBands();
+
+            var collection = _context.Bands as IQueryable<Band>;
+
+            if (!string.IsNullOrWhiteSpace(mainGenre))
+                collection = collection.Where(b => b.MainGenre == mainGenre);
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+                collection = collection.Where(b => b.Name.Contains(searchQuery));
+
+            return collection.ToList();
+        }
+
         public IEnumerable<Band> GetBands(IEnumerable<Guid> bandIds)
         {
             if (bandIds == null)

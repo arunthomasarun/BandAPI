@@ -27,12 +27,13 @@ namespace BandAPI.Controllers
 
 
         //http://localhost:3052/api/bands?mainGenre=Rock
+        //http://localhost:3052/api/bands?mainGenre=Rock&searchQuery=Gu
         //http://localhost:3052/api/bands
         [HttpGet]
         [HttpHead]
-        public IActionResult GetBands([FromQuery] string mainGenre)
+        public IActionResult GetBands([FromQuery] string mainGenre, [FromQuery] string searchQuery)
         {
-            var bands = _bandAlbumRepository.GetBands(mainGenre);
+            var bands = _bandAlbumRepository.GetBands(mainGenre, searchQuery);
 
             //var bandsDto = new List<BandDto>();
 
