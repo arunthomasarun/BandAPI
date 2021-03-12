@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BandAPI.Models;
 using BandAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +22,13 @@ namespace BandAPI.Controllers
             this._mapper = mapper;
         }
 
+        [HttpGet]
+        [HttpHead]
+        public ActionResult<IEnumerable<AlbumsDto>> GetAlbums(Guid bandId)
+        {
+            var albumsFromRepo = _bandAlbumRepository.GetAlbums(bandId);
 
+            return Ok(_mapper.Map<IEnumerable<AlbumsDto>>(albumsFromRepo));
+        }
     }
 }
